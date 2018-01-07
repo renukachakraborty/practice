@@ -1,6 +1,5 @@
 package me.renu.person.service;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -8,28 +7,56 @@ import me.renu.person.model.Person;
 
 public class PersonService {
 	
-	private Map<String,Person> personMap = new HashMap<>(); 
+	private Map<String,Person> personMap;
 	
+	public PersonService(Map<String, Person> personMap) {
+		
+		this.personMap = personMap ;
+	}
 	
-	public void add(Person newPerson) {
-		newPerson.setId(UUID.randomUUID().toString());
-		personMap.put(newPerson.getId(),newPerson);
+	public String add(Person person) {
+		
+		person.setId(UUID.randomUUID().toString()); 
+		personMap.put(person.getId(),person);
+		return person.getId();
 	}
 	
 	public Person get(String id)
 	{
-		return personMap.get(id);
+		if (personMap.containsKey(id)) {
+			
+			return personMap.get(id) ;
+		}
+		else {
+			
+			//TODO throw exception
+			return null ;
+		}
 	}
 	
-	public void update(String id, Person newPerson)
+	public void update(Person person)
 	{
-		personMap.put(id, newPerson);
+		String id = person.getId();
 		
-		personMap.get(id);
+		if (personMap.containsKey(id)) {
+			
+			personMap.put(id, person) ;
+		}
+		else {
+			
+			//TODO exception
+		}
 	}
 	
 	public void delete(String id)
 	{
-		personMap.remove(id);
+		if (personMap.containsKey(id)) {
+			
+			personMap.remove(id) ;
+		}
+		else {
+			
+			//TODO exception
+		}
 	}
 }
