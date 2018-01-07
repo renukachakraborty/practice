@@ -1,6 +1,6 @@
 package me.renu.person.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,15 +41,32 @@ public class PersonServiceTest {
 	}
 	
 	@Test
-    public void testUpdate() {
+    public void updateShouldModifyExistingPerson() {
 	
-		//TODO
+		final Person person = createPerson() ;
+		person.setId("x") ;
+		testMap.put(person.getId(), person) ;
+		
+		final Person person2 = new Person() ;
+		person2.setId("x") ;
+		person2.setFirstName("Soumabrata") ;
+				
+		personService.update(person2) ;
+		
+		assertEquals(person2, testMap.get("x")) ;
 	}
 
     @Test
-    public void testDelete() {
+    public void deleteShouldRemoveFromRepository() {
 	
-    	//TODO
+    	final Person person = new Person() ;
+    	person.setId("x") ;
+    	
+    	testMap.put(person.getId(), person) ;
+    	
+    	personService.delete("x") ;
+    	
+    	assertNull(testMap.get("x")) ;
 	}
 	
 	private Person createPerson() {
